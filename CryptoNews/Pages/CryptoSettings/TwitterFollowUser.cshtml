@@ -1,0 +1,43 @@
+﻿@page
+@model CryptoNews.Pages.CryptoSettings.TwitterFollowUserPageModel
+@{
+	ViewData["Title"] = Html.DisplayNameFor(m => m);
+
+	var TwitterFollowUser = Model?.TwitterFollowUser;
+
+	if (TwitterFollowUser == default(object)) { return; }
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+			<form class="row" method="post">
+				@Html.HiddenFor(m => m.TwitterFollowUser.Id)
+				<div class="col-12">
+					<div class="form-check">
+						@Html.CheckBoxFor(m => m.TwitterFollowUser.State, new { @class = "form-check-input" })
+						<label class="form-check-label" for="TwitterStatusState">@Html.DisplayNameFor(m => m) : @(TwitterFollowUser.State)</label>
+					</div>
+					<br />
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						@Html.LabelFor(m => TwitterFollowUser.FromMinute, new { @class = "font-weight-bold" })
+						<input class="form-control" asp-for="@TwitterFollowUser.FromMinute" placeholder="@(Html.DisplayNameFor(m => TwitterFollowUser.FromMinute))" />
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						@Html.LabelFor(m => TwitterFollowUser.ToMinute, new { @class = "font-weight-bold" })
+						<input class="form-control" asp-for="@TwitterFollowUser.ToMinute" placeholder="@(Html.DisplayNameFor(m => TwitterFollowUser.ToMinute))" />
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<button class="btn btn-success mt-2 mb-5" type="submit">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

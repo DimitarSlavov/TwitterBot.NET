@@ -1,0 +1,25 @@
+﻿@model List<CryptoCore.Models.Accounts.TwitterAccountModel>
+
+<form method="post">
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">@(Html.DisplayNameFor(m => Model[default].Name))</th>
+				<th scope="col">Remove</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (int i = default; i < Model.Count; i++)
+			{
+				<tr>
+					<th scope="row">@(i + 1)</th>
+					<td><input class="form-control" asp-for="@Model[i].Name" placeholder="@(Html.DisplayNameFor(m => Model[i].Name))" readonly="readonly" /></td>
+					<td>
+						<button class="btn btn-danger mt-1 mb-1" asp-route-id="@Model[i].Id" asp-page-handler="Delete">Del</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</form>

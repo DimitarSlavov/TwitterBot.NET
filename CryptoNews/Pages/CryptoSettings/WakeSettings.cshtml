@@ -1,0 +1,44 @@
+﻿@page
+@model CryptoNews.Pages.Manage.WakeSettingsPageModel
+
+@{
+	ViewData["Title"] = Html.DisplayNameFor(m => m);
+
+	var Wake = Model?.Wake;
+
+	if (Wake == default(object)) { return; }
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+			<form class="row" method="post" asp-page-handler="Wake">
+				@Html.HiddenFor(m => m.Wake.Id)
+				<div class="col-12">
+					<div class="form-check">
+						@Html.CheckBoxFor(m => m.Wake.State, new { @id = "WakeState", @class = "form-check-input" })
+						<label class="form-check-label" for="WakeState">Wake : @(Wake.State)</label>
+					</div>
+					<br />
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						@Html.LabelFor(m => Wake.FromMinute, new { @class = "font-weight-bold" })
+						<input class="form-control" asp-for="@Wake.FromMinute" placeholder="@(Html.DisplayNameFor(m => Wake.FromMinute))" />
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						@Html.LabelFor(m => Wake.ToMinute, new { @class = "font-weight-bold" })
+						<input class="form-control" asp-for="@Wake.ToMinute" placeholder="@(Html.DisplayNameFor(m => Wake.ToMinute))" />
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<button class="btn btn-success mt-2 mb-5" type="submit">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

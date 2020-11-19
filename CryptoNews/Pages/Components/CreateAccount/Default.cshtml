@@ -1,0 +1,15 @@
+﻿@model CryptoCore.Models.Common.AccountBase
+
+<form method="post" class="col-12" asp-page-handler="Create">
+	<div class="row">
+		<div class="col-12 col-md-6">
+			<div class="form-group">
+				@Html.LabelFor(m => Model.Name, new { @class = "font-weight-bold" })
+				<input class="form-control" asp-for="@Model.Name" placeholder="@(Html.DisplayNameFor(m => Model.Name))" />
+			</div>
+		</div>
+		<div class="col-sm-12">
+			<button class="btn btn-success mt-2 mb-5" type="submit">Create</button>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,54 @@
+﻿@page
+@model TwitterStatusSettingsPageModel
+
+@{
+	ViewData["Title"] = Html.DisplayNameFor(m => m);
+
+	var TwitterStatus = Model?.TwitterStatus;
+
+	if (TwitterStatus == default(object)) { return; }
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+			<form class="row" method="post" asp-page-handler="TwitterStatus">
+				@Html.HiddenFor(m => m.TwitterStatus.Id)
+				<div class="col-12">
+					<div class="form-check">
+						@Html.CheckBoxFor(m => m.TwitterStatus.State, new { @id = "TwitterStatusState", @class = "form-check-input" })
+						<label class="form-check-label" for="TwitterStatusState">Twitter : @(TwitterStatus.State)</label>
+					</div>
+					<br />
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						@Html.LabelFor(m => TwitterStatus.FromMinute, new { @class = "font-weight-bold" })
+						<input class="form-control" asp-for="@TwitterStatus.FromMinute" placeholder="@(Html.DisplayNameFor(m => TwitterStatus.FromMinute))" />
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						@Html.LabelFor(m => TwitterStatus.ToMinute, new { @class = "font-weight-bold" })
+						<input class="form-control" asp-for="@TwitterStatus.ToMinute" placeholder="@(Html.DisplayNameFor(m => TwitterStatus.ToMinute))" />
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<button class="btn btn-success mt-2 mb-5" type="submit">Update</button>
+				</div>
+			</form>
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						<label class="font-weight-bold">Send Random Tweet</label>
+						<form method="post" asp-page-handler="SendRandomStatus">
+							<input class="btn btn-warning mt-2 mb-3" type="submit" value="Tweet Now" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

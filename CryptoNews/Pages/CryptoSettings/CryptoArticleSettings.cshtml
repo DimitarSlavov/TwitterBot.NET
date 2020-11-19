@@ -1,0 +1,108 @@
+﻿@page
+@model CryptoArticleSettingsPageModel
+
+@{
+	ViewData["Title"] = Html.DisplayNameFor(m => m);
+
+	var CryptoArticle = Model?.CryptoArticle;
+
+	if (CryptoArticle == default(object)) { return; }
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+			<form method="post" class="row">
+				@Html.HiddenFor(m => m.CryptoArticle.Id)
+				<div class="col-12">
+					<div class="form-check">
+						@Html.CheckBoxFor(m => m.CryptoArticle.State, new { @id = "CryptoArticleState", @class = "form-check-input" })
+						<label class="form-check-label" for="CryptoArticleState">Articles : @(CryptoArticle.State)</label>
+					</div>
+					<br />
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						@Html.LabelFor(m => CryptoArticle.FeedMinutes, new { @class = "font-weight-bold" })
+						<input class="form-control" asp-for="@CryptoArticle.FeedMinutes" placeholder="@(Html.DisplayNameFor(m => CryptoArticle.FeedMinutes))" />
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(m => CryptoArticle.CryptoNewsFeed, new { @class = "font-weight-bold" })
+						<input class="form-control" asp-for="@CryptoArticle.CryptoNewsFeed" placeholder="@(Html.DisplayNameFor(m => CryptoArticle.CryptoNewsFeed))" />
+					</div>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">@(Html.DisplayNameFor(m => CryptoArticle.CryptoNewsFeeds))</th>
+							<th scope="col">Remove</th>
+						</tr>
+					</thead>
+					<tbody id="tableBody">
+						@for (int i = default; i < CryptoArticle.CryptoNewsFeeds?.Count; i++)
+						{
+							<tr data-delete-row="@(i + 1)">
+								<th scope="row">@(i + 1)</th>
+								<td data-feed-parent="true">
+									<input data-news-feed="true" readonly="readonly" class="form-control" asp-for="@CryptoArticle.CryptoNewsFeeds[i]" placeholder="@(Html.DisplayNameFor(m => CryptoArticle.CryptoNewsFeeds))" />
+								</td>
+								<td>
+									<button data-delete-feed="@(i + 1)" class="btn btn-danger mt-1 mb-1">Del</button>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<div class="col-sm-12">
+					<button class="btn btn-success mt-2 mb-5" type="submit" asp-page-handler="CryptoArticleSettings">Update</button>
+				</div>
+			</form>
+			<form class="row" asp-page-handler="SendStatus" method="post">
+				<div class="col-sm-12">
+					<div class="form-group">
+						@Html.LabelFor(m => CryptoArticle.Status, new { @class = "font-weight-bold" })
+						<textarea maxlength="280" class="form-control" asp-for="@CryptoArticle.Status" placeholder="@(Html.DisplayNameFor(m => CryptoArticle.Status))"></textarea>
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<button class="btn btn-success mt-2 mb-5" type="submit">Send</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="form-group">
+				@Html.LabelFor(m => Model.ArticlesCount, new { @class = "font-weight-bold" })
+				<input class="form-control w-auto" asp-for="@Model.ArticlesCount" placeholder="@(Html.DisplayNameFor(m => Model.ArticlesCount))" readonly="readonly" />
+				<form method="post">
+					<div class="d-flex">
+						<input class="btn btn-dark mt-3 mb-3" type="submit" asp-page-handler="FeedArticles" value="Feed" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts
+{
+	<script>
+		$(document).ready(function ()
+		{
+			$('[data-delete-feed]').on('click', function (e)
+			{
+				e.preventDefault();
+				let rowNum = $(this).attr('data-delete-feed');
+				$(this).parents().find('[data-delete-row="' + rowNum + '"]').hide();
+				$(this).parent().siblings('[data-feed-parent="true"]').children('[data-news-feed="true"]').val('');
+			})
+		});
+	</script>
+}

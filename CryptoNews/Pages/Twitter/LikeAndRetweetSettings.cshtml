@@ -1,0 +1,44 @@
+﻿@page
+@model CryptoNews.Pages.Twitter.LikeAndRetweetSettingsModel
+@{
+    ViewData["Title"] = Html.DisplayNameFor(m => m);
+
+    var LikeAndRetweetSettings = Model?.LikeAndRetweetSettings;
+
+    if (LikeAndRetweetSettings == default(object)) { return; }
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="row" method="post">
+                @Html.HiddenFor(m => m.LikeAndRetweetSettings.Id)
+                <div class="col-12">
+                    <div class="form-check">
+                        @Html.CheckBoxFor(m => m.LikeAndRetweetSettings.State, new { @class = "form-check-input" })
+                        <label class="form-check-label" for="TwitterStatusState">@Html.DisplayNameFor(m => m) : @(LikeAndRetweetSettings.State)</label>
+                    </div>
+                    <br />
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => LikeAndRetweetSettings.FromMinute, new { @class = "font-weight-bold" })
+                        <input class="form-control" asp-for="@LikeAndRetweetSettings.FromMinute" placeholder="@(Html.DisplayNameFor(m => LikeAndRetweetSettings.FromMinute))" />
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => LikeAndRetweetSettings.ToMinute, new { @class = "font-weight-bold" })
+                        <input class="form-control" asp-for="@LikeAndRetweetSettings.ToMinute" placeholder="@(Html.DisplayNameFor(m => LikeAndRetweetSettings.ToMinute))" />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <button class="btn btn-success mt-2 mb-5" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
